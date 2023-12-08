@@ -1,0 +1,16 @@
+From node:14 as angular
+
+WORKDIR /src
+
+COPY package*.json ./
+
+RUN npm install
+RUN npm build
+
+
+FROM mcr.microsoft.com/dotnet/aspnet:3.1
+
+WORKDIR /app
+COPY --from=build /app 
+
+WORKDIR /usr/src/app/angular-curd
